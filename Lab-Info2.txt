@@ -1,0 +1,356 @@
+Java I/O
+---------------
+
+
+java.io  package
+
+stream  :   Byte  Stream  & Character Stream
+
+1 byte :  8 bits
+
+1 char : 16 bits
+
+UTF  
+
+InputStream  --- data read in form of byte
+OutputStream  --- data write in form of byte
+
+
+
+Reader --- data read in form of chars
+Writer  -- write data in form of chars
+
+To handle I/O operations, there is checked exception handled :
+IOException
+
+
+
+Buffer  :  temporary strorage  for Input & Output opearations
+InputBuffer & outputbuffer
+
+BufferedReader  :  to read data using buffer through InputStreamReader
+
+
+Default input and output objects :  System.in  & System.out
+
+
+To take a data from console :
+
+  InputStreamReader  isr = new InputStreamReader(System.in);
+  BufferedReader  br = new BufferedReader(isr);
+
+  String data = br.readLine();  
+
+
+/* take radious from user and show area*/
+
+public class Circle {
+
+	public static void main(String[] args) {
+		InputStreamReader  isr = new InputStreamReader(System.in);
+		BufferedReader  br = new BufferedReader(isr);
+		
+		try {
+			System.out.println("Enter Radius:");
+			String data = br.readLine();
+			double radidus = Double.parseDouble(data);
+			double area = Math.PI * radidus*radidus;
+			System.out.println("Area is "+area);
+		} 
+		catch (IOException e) {
+			System.out.println("Er1:"+e.getMessage());
+		} 
+		catch (Exception e) {
+			System.out.println("Er2:"+e.getMessage());
+		} 
+		
+		 
+
+	}
+
+}
+
+
+
+Design a java program with I/O to take 3 sides of a triangle, find its area.
+
+Math.sqrt()
+
+Account  : class
+
+acno : string
+name : string
+balance : double
+
+Input :
+Enter Account Details:
+A101,RaJA,23456.78
+
+Ouput:
+Name: RAJA
+AccountNo: A101
+Balance: 23456.78
+
+String a [ ] = data.spllit(",");
+
+
+System.out.printf("Name:%s\nAcno:%s\nBalance:%.2f", 
+			account.getName().toUpperCase(),
+			account.getAcno(),
+			account.getBalance()
+			);	
+
+
+
+
+
+Handle Files
+---------------
+
+
+bytestream:
+
+FileInputStream
+FileOutputStream
+
+charstream:
+
+FileReader
+FileWriter
+
+Class :  File  -  a descriptor for any existing file or folder.
+
+
+public class TestFile {
+
+	public static void main(String[] args) {
+		File file = new File("d:\\test.txt");
+		if( file.isFile()==true)
+			System.out.println("it is a file");
+		else
+			System.out.println("it is a folder");
+		System.out.println("Size:"+file.length());
+
+	}
+
+}
+
+
+
+Take a folder name from user and find its dir-list ( ls , dir )
+
+
+public class TestFile1 {
+
+	public static void main(String[] args) throws Exception {
+		String path="D:\\eclipse-jee-neon-3-win32-x86_64\\eclipse";
+		File file = new File(path);
+		String a[] =file.list();
+		for(String b:a){
+			File f = new File(path+"\\"+b);
+			if(f.isDirectory())
+			   System.out.println(b+" <dir>");
+			else
+				 System.out.println(b);	
+			
+		}
+
+	}
+
+}
+
+
+
+To copy a file from source to sink:
+-------------
+
+1. make an inputstream for reading byte by byte
+2. make an outputstream for writing byte by byte
+3. closes all streams
+
+package TestFile;---------------create file
+
+import java.io.File;
+
+public class File2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+File f=new File("D:\\deepti");
+//f.mkdir();
+f.delete();
+	}
+
+}
+
+package TestFile;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.lang.Character;
+
+public class Imageup {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto
+	FileReader f=new FileReader("D:\\abc.txt");
+	BufferedReader br= new BufferedReader(f);
+
+	//FileWriter f1=new FileWriter("D:\\t.txt");
+	
+	
+	
+	/*char ch=0;
+	while ((ch = (char) f.read()) != -1){	
+		
+	int i=f.read();
+		
+	if(i==-1)
+	{
+		if (Character.isLowerCase(ch))
+		   {
+		        ch=Character.toUpperCase(ch);// convert assign variable
+		   }
+	}f1.write(i);;
+		
+	}*/
+	/*String i="";
+	while((i=br.readLine())!=null)
+	{
+		i=i.toUpperCase();
+	  f1.write(i);
+	}
+	f.close();
+	f1.close();
+	*/
+	
+	int line=1;
+	while(true)
+	{
+		String s=br.readLine();
+		if(s==null)
+	       break;
+		if(s.indexOf("not")!=-1)
+			System.out.println(line+":"+s);
+		line++;
+	}
+	
+	f.close();
+	br.close();
+	
+	
+	
+	
+	
+}
+}
+
+
+Read a file 
+
+
+Object Serialization: which is used to convert object to bytestream
+
+Deserialization : convert byte stream to object type
+
+ObjectOutputStream  ObjectInputStream
+writeObject(object)   object readObject()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Serialization is a mechanism of converting the state of an object into a byte stream. Deserialization is the reverse process where the byte stream is used to recreate the actual Java object in memory.
+To make a Java object serializable we implement the java.io.Serializable interface.
+
+
+Serialization is a mechanism of converting the state of an object into a byte stream. 
+
+Deserialization is the reverse process where the byte stream is used to recreate the actual Java object in memory. 
+
+This mechanism is used to persist the object.
+
+The ObjectOutputStream class contains writeObject() method for serializing an Object.
+public final void writeObject(Object obj)throws IOException
+
+
+The ObjectInputStream class contains readObject() method for deserializing an object.
+public final Object readObject() throws IOException,ClassNotFoundException
+
+
+
+If a parent class has implemented Serializable interface then child class doesn’t need to implement it but vice-versa is not true.
+
+transient data members are not saved via Serialization process.
+
+
+
+
+
+
+
+The serialization runtime associates with each serializable class a version number, called a serialVersionUID, which is used during deserialization to verify that the sender and receiver of a serialized object have loaded classes for that object that are compatible with respect to serialization. 
+
+If the receiver has loaded a class for the object that has a different serialVersionUID than that of the corresponding sender's class, then deserialization will result in an InvalidClassException. 
+
+A serializable class can declare its own serialVersionUID explicitly by declaring a field named "serialVersionUID" that must be static, final, and of type long.
+
+
+
+package TestFile;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Emp implements Serializable {
+
+	
+	
+	private String name;
+	private transient int age;
+	
+	public Emp(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Emp e=new Emp("abc",23);
+		
+		System.out.println(e.name+" "+e.age);
+	/*	ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream("d:\\obj.txt"));//serialization
+		oos.writeObject(e);
+		oos.close();*/
+		
+		ObjectInputStream ois=new ObjectInputStream(new FileInputStream("d:\\obj.txt"));//deserialization
+        Emp e1= (Emp)ois.readObject();//downcasting
+        System.out.println(e1.name+" "+e1.age);
+        ois.close();
+        
+	}
+
+}
+
+
